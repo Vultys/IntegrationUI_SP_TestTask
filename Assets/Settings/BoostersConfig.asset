@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036f4acf5301c574ebbc9af0be31e09c, type: 3}
+  m_Name: BoostersConfig
+  m_EditorClassIdentifier: 
+  boosters:
+  - type: 0
+    name: shield
+    icon: {fileID: 21300000, guid: 89ab2df1ee9fec74baa368493890912a, type: 3}
+    probability: 0
+  - type: 1
+    name: watch
+    icon: {fileID: 21300000, guid: 720bb9781869f694ab248d4344608d62, type: 3}
+    probability: 0
+  - type: 2
+    name: bomb
+    icon: {fileID: 21300000, guid: 893ccd96a1bb8304291fe693129d44d4, type: 3}
+    probability: 0
+  - type: 3
+    name: blueSpell
+    icon: {fileID: 21300000, guid: 8d22896b670cebd478c02de798b3b255, type: 3}
+    probability: 0
+  - type: 4
+    name: redSpell
+    icon: {fileID: 21300000, guid: 2420c62c0d7e2ba41a44d3eb62c12a9b, type: 3}
+    probability: 0
+  - type: 5
+    name: greenSpell
+    icon: {fileID: 21300000, guid: a6c5395b98e755644befd91c861e3d18, type: 3}
+    probability: 0
