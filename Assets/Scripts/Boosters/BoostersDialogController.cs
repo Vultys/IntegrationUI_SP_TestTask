@@ -8,6 +8,10 @@ public class BoostersDialogController : MonoBehaviour
 
     [SerializeField] private BoosterManager _boosterManager;
 
+    [SerializeField] private GameObject _okButton;
+
+    private GameObject _activeBoosterHighlighter;
+
     public void Start()
     {
         OnBoosterRefreshButtonClicked();
@@ -24,6 +28,28 @@ public class BoostersDialogController : MonoBehaviour
         for(int i = 0; i < _boosterPlacements.Count; i++)
         {
             _boosterPlacements[i].sprite = newBoosters[i].icon;
+        }
+        
+        if(_activeBoosterHighlighter != null)
+        {
+            _activeBoosterHighlighter.SetActive(false);
+            _activeBoosterHighlighter = null;
+            _okButton.SetActive(false);
+        }
+    }
+
+    public void OnBoosterPlacementClicked(GameObject hightlighter)
+    {
+        if(_activeBoosterHighlighter != null)
+        {
+            _activeBoosterHighlighter.SetActive(false);
+        }
+
+        hightlighter.SetActive(true);
+        _activeBoosterHighlighter = hightlighter;
+        if(!_okButton.activeSelf)
+        {
+            _okButton.SetActive(true);
         }
     }
 }
