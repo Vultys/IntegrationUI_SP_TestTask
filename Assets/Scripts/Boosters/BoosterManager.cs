@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class BoosterManager : MonoBehaviour
@@ -10,41 +8,65 @@ public class BoosterManager : MonoBehaviour
 
     private List<Booster> _currentBoosters;
 
+    /// <summary>
+    /// Generates a new list of boosters
+    /// </summary>
+    /// <returns> List of boosters </returns>
     public List<Booster> GenerateBoosters()
     {
-        List<Booster> newBoosters = new List<Booster>();
-        List<Booster> pool = new List<Booster>(_boostersConfig.boosters);
+        var pool = new List<Booster>(_boostersConfig.boosters);
+        var newBoosters = new List<Booster>();
 
-        if(_currentBoosters != null && _currentBoosters.Count > 0)
+        if(_currentBoosters?.Count > 0)
         {
-            var availableBoosters = pool.Except(_currentBoosters).ToList();
-            availableBoosters.OrderBy(_ => Random.value).ToList();
-            newBoosters.Add(availableBoosters[0]);
-            newBoosters.Add(availableBoosters[1]);
+            var availableBoosters = GetShuffledList(pool.Except(_currentBoosters).ToList());
+            newBoosters.AddRange(availableBoosters.Take(_boostersConfig.unchangedBoosters));
         }
         else
         {
-            pool.OrderBy(_ => Random.value).ToList();
-            newBoosters.Add(pool[0]);
-            newBoosters.Add(pool[1]);
+            var shuffledPool = GetShuffledList(pool);
+            newBoosters.AddRange(shuffledPool.Take(_boostersConfig.unchangedBoosters));
         }
 
-        Booster third;
-        if(_currentBoosters != null && _currentBoosters.Count > 0 && Random.value < _boostersConfig.thirdBoosterRefreshProbability)
+        newBoosters.Add(GenerateThirdBooster(pool, newBoosters));
+
+        _currentBoosters = GetShuffledList(newBoosters);
+        return _currentBoosters;
+    }
+
+    /// <summary>
+    /// Generates a third booster
+    /// </summary>
+    /// <param name="pool"> List of boosters </param>
+    /// <param name="currentSelection"> List of currently selected boosters </param>
+    /// <returns> Booster </returns>
+    private Booster GenerateThirdBooster(List<Booster> pool, List<Booster> currentSelection)
+    {
+        bool reuseOld = _currentBoosters != null 
+                        && _currentBoosters.Count > 0 
+                        && Random.value < _boostersConfig.thirdBoosterRefreshProbability;
+
+        if(reuseOld)
         {
-            third = _currentBoosters[Random.Range(0, _currentBoosters.Count)];
+            return _currentBoosters[Random.Range(0, _currentBoosters.Count)];
         }
-        else
+
+        var remaining = pool.Except(currentSelection).ToList();
+        if(remaining.Count == 0)
         {
-            var remaining = pool.Except(newBoosters).ToList();
-            third = remaining[Random.Range(0, remaining.Count)];
+            remaining = pool;
         }
-        
-        newBoosters.Add(third);
 
-        newBoosters.OrderBy(_ => Random.value).ToList();
-        _currentBoosters = new List<Booster>(newBoosters);
+        return remaining[Random.Range(0, remaining.Count)];
+    }
 
-        return newBoosters;
+    /// <summary>
+    /// Shuffles the list
+    /// </summary>
+    /// <param name="list"> List to shuffle </param>
+    /// <returns> Shuffled list </returns>
+    private List<Booster> GetShuffledList(List<Booster> list)
+    {
+        return list.OrderBy(_ => Random.value).ToList();
     }
 }

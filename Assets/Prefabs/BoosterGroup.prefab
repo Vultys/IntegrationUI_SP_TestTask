@@ -205,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _highlighter: {fileID: 7743858481471369552}
+  _animationConfig: {fileID: 11400000, guid: 948b1b3709c162747869389334d5dc89, type: 2}
 --- !u!1 &7743858481471369552
 GameObject:
   m_ObjectHideFlags: 0

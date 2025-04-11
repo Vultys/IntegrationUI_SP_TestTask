@@ -179,15 +179,16 @@ MonoBehaviour:
   - {fileID: 4454099150948846205}
   - {fileID: 1009401870772057999}
   - {fileID: 354416341720881511}
-  _boosterManager: {fileID: 0}
+  _canvasGroup: {fileID: 4048649937789650581}
   _okButton: {fileID: 1056384786013226484}
+  _refreshButton: {fileID: 4554918584650154544}
   _centerPoint: {fileID: 3671856927744433863}
   _slotPoint: {fileID: 2479292642177231867}
   _checkMarkPrefab: {fileID: 4891787963306404368, guid: d5adee75aca96884b93473328cc9d2ce, type: 3}
   _confirmEffect: {fileID: 2763340378672883245}
-  _canvasGroup: {fileID: 4048649937789650581}
+  _boosterManager: {fileID: 0}
   _sidePanelController: {fileID: 6551584547795339543}
-  _refreshButton: {fileID: 4554918584650154544}
+  _animationConfig: {fileID: 11400000, guid: 948b1b3709c162747869389334d5dc89, type: 2}
 --- !u!225 &4048649937789650581
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -210,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2847873415319456181}
   m_Layer: 5
-  m_Name: FoldedPanelPosition
+  m_Name: PanelHiddenPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1395715887436865355}
   m_Layer: 5
-  m_Name: FoldedPanelButtonPosition
+  m_Name: ButtonHiddenPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -768,6 +769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8972203820809401454}
   - component: {fileID: 6551584547795339543}
+  - component: {fileID: 6298276633086398357}
   m_Layer: 5
   m_Name: SidePanelController
   m_TagString: Untagged
@@ -787,9 +789,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4421500357756611243}
-  - {fileID: 7540054570356475666}
   - {fileID: 4998666906707151551}
+  - {fileID: 7540054570356475666}
   - {fileID: 2847873415319456181}
   - {fileID: 1395715887436865355}
   m_Father: {fileID: 7985221946038272422}
@@ -812,13 +813,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panel: {fileID: 2520954686753112550}
-  _slots:
-  - {fileID: 6754937864561198884}
-  _hidePanelButton: {fileID: 4421500357756611243}
-  _defaultHidePanelButtonPosition: {fileID: 7540054570356475666}
-  _defaultPanelPosition: {fileID: 4998666906707151551}
-  _hiddenPanelPosition: {fileID: 2847873415319456181}
-  _foldedHidePanelButtonPosition: {fileID: 1395715887436865355}
+  _toggleButton: {fileID: 4421500357756611243}
+  _panelVisiblePosition: {fileID: 4998666906707151551}
+  _panelHiddenPosition: {fileID: 2847873415319456181}
+  _buttonVisiblePosition: {fileID: 7540054570356475666}
+  _buttonHiddenPosition: {fileID: 1395715887436865355}
+  _animationConfig: {fileID: 11400000, guid: 948b1b3709c162747869389334d5dc89, type: 2}
+--- !u!114 &6298276633086398357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3232503361419193473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &4554918584650154544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,11 +1159,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8972203820809401454}
+  m_Father: {fileID: 7985221946038272422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -313.49997, y: 21}
+  m_AnchoredPosition: {x: -263.5, y: 21}
   m_SizeDelta: {x: 75, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4208059198799438883
@@ -1308,7 +1328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4998666906707151551}
   m_Layer: 5
-  m_Name: DefaultPanelPosition
+  m_Name: PanelVisiblePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1379,7 +1399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7540054570356475666}
   m_Layer: 5
-  m_Name: DefaultButtonPosition
+  m_Name: ButtonFullyVisiblePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1469,6 +1489,7 @@ RectTransform:
   m_Children:
   - {fileID: 2520954686753112550}
   - {fileID: 8972203820809401454}
+  - {fileID: 4421500357756611243}
   - {fileID: 4466746660675560415}
   - {fileID: 1600713681437613201}
   - {fileID: 3671856927744433863}
@@ -1910,6 +1931,10 @@ PrefabInstance:
     - target: {fileID: 7121575437117759184, guid: 7dbec0c8259e5ea4782ca4642fa61d00, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240868384451638282, guid: 7dbec0c8259e5ea4782ca4642fa61d00, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -8,6 +8,8 @@ public class BoostersConfig : ScriptableObject
     public List<Booster> boosters = new List<Booster>();
 
     public float thirdBoosterRefreshProbability = 0.5f;
+    
+    public int unchangedBoosters = 2;
 }
 
 public enum BoostersType

@@ -6,16 +6,27 @@ using UnityEngine;
 
 public class SidePanelController : MonoBehaviour
 {
+    [Header("Panel Ellements")]
     [SerializeField] private RectTransform _panel;
-    [SerializeField] private List<Transform> _slots;
-    [SerializeField] private RectTransform _hidePanelButton;
-    [SerializeField] private Transform _defaultHidePanelButtonPosition;
-    [SerializeField] private Transform _defaultPanelPosition;
-    [SerializeField] private Transform _hiddenPanelPosition;
-    [SerializeField] private Transform _foldedHidePanelButtonPosition;
-    public bool IsVisible => _isVisible; 
-    private bool _isVisible = true;
+    [SerializeField] private RectTransform _toggleButton;
 
+    [Header("Panel Positions")]
+    [SerializeField] private Transform _panelVisiblePosition;
+    [SerializeField] private Transform _panelHiddenPosition;
+
+    [Header("Toggle Button Positions")]
+    [SerializeField] private Transform _buttonVisiblePosition;
+    [SerializeField] private Transform _buttonHiddenPosition;
+
+    [Header("Animation Settings")]
+    [SerializeField] private AnimationConfig _animationConfig;
+
+    private bool _isVisible = true;
+    public bool IsVisible => _isVisible; 
+
+    /// <summary>
+    /// Called from UI button to toggle panel visibility
+    /// </summary>
     public void OnTogglePanelButtonClicked()
     {
         if(_isVisible)
@@ -28,22 +39,35 @@ public class SidePanelController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shows the panel with a move animation
+    /// </summary>
     public IEnumerator ShowPanel()
     {
         _isVisible = true;
-        yield return _hidePanelButton.DOMoveX(_defaultHidePanelButtonPosition.position.x, 0.5f).SetEase(Ease.InCubic).WaitForCompletion();
-        yield return _panel.DOMoveX(_defaultPanelPosition.position.x, 0.5f).SetEase(Ease.OutCubic).WaitForCompletion();
+        yield return AnimatePanel(_toggleButton, _buttonVisiblePosition.position.x, Ease.OutCubic);
+        yield return AnimatePanel(_panel, _panelVisiblePosition.position.x, Ease.OutCubic);
     }
 
+    /// <summary>
+    /// Hides the panel with a move animation
+    /// </summary>
     public IEnumerator HidePanel()
     {
         _isVisible = false;
-        yield return _panel.DOMoveX(_hiddenPanelPosition.position.x, 0.5f).SetEase(Ease.InCubic).WaitForCompletion();
-        yield return _hidePanelButton.DOMoveX(_foldedHidePanelButtonPosition.position.x, 0.5f).SetEase(Ease.OutCubic).WaitForCompletion();
+        yield return AnimatePanel(_panel, _panelHiddenPosition.position.x, Ease.OutCubic);
+        yield return AnimatePanel(_toggleButton, _buttonHiddenPosition.position.x, Ease.OutCubic);
     }
-    
-    public Transform GetNextAvailableSlot()
+
+    /// <summary>
+    /// Animates the panel to the target position
+    /// </summary>
+    /// <param name="target"> Target RectTransform </param>
+    /// <param name="toX"> Target X position </param>
+    /// <param name="ease"> Easing curve </param>
+    /// <returns> Tween object </returns>
+    public Tween AnimatePanel(RectTransform target, float toX, Ease ease)
     {
-        return _slots.FirstOrDefault(s => s.childCount == 0);
+        return target.DOMoveX(toX, _animationConfig.sidePanelAnimationDuration).SetEase(ease);
     }
 }

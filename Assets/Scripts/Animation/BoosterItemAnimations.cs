@@ -3,9 +3,17 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
+/// <summary>
+/// Handles the animations of the booster items
+/// </summary>
 public class BoosterItemAnimations : MonoBehaviour
 {
+
+    [Header("Components")]
     [SerializeField] private GameObject _highlighter;
+
+    [Header("Animation Settings")]
+    [SerializeField] private AnimationConfig _animationConfig;
 
     private RectTransform _rectTransform;
 
@@ -14,35 +22,65 @@ public class BoosterItemAnimations : MonoBehaviour
         _rectTransform = GetComponent<RectTransform>();
     }
 
+    /// <summary>
+    /// Highlights the booster item
+    /// </summary>
     public void Select()
     {
         _highlighter.SetActive(true);
     }
 
+    /// <summary>
+    /// Removes highlight from the booster item
+    /// </summary>
     public void Deselect()
     {
         _highlighter.SetActive(false);
     }
 
-    public void Hide(Action onComplete)
+    /// <summary>
+    /// Hides the booster item with a scale animation
+    /// </summary>
+    /// <param name="duration"> Duration of the animation </param>
+    public void Hide(float duration)
     {
-        _rectTransform.DOScale(0, 0.3f).SetEase(Ease.InBack).OnComplete(() => onComplete?.Invoke());
+        _rectTransform
+            .DOScale(0, duration)
+            .SetEase(Ease.InBack);
     }
 
-    public IEnumerator AnimateToCenter(Vector3 center)
+    /// <summary>
+    /// Animates the booster item to the center of the screen
+    /// </summary>
+    /// <param name="center"> Center of the screen </param>
+    /// <param name="duration"> Duration of the animation </param>
+    public IEnumerator AnimateToCenter(Vector3 center, float duration)
     {
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(_rectTransform.DOMove(center, 0.5f).SetEase(Ease.InOutQuad));
-        sequence.Append(_rectTransform.DOScale(1.3f, 0.5f));
-        yield return sequence.WaitForCompletion();
+        yield return PlayMoveAndScaleSequence(center, _animationConfig.boosterItemCenterScale, duration);
     }
 
-    public IEnumerator AnimateToSlot(Vector3 slot)
+    /// <summary>
+    /// Animates the booster item to the slot
+    /// </summary>
+    /// <param name="slot"> Slot to animate to </param>
+    /// <param name="duration"> Duration of the animation </param>
+    public IEnumerator AnimateToSlot(Vector3 slot, float duration)
     {
         Deselect();
+        yield return PlayMoveAndScaleSequence(slot, _animationConfig.boosterItemSlotScale, duration);
+    }
+
+    /// <summary>
+    /// Plays a sequence of move and scale animations
+    /// </summary>
+    /// <param name="target"> Target position </param>
+    /// <param name="scale"> Scale to apply </param>
+    /// <param name="duration"> Duration of the animation </param>
+    private IEnumerator PlayMoveAndScaleSequence(Vector3 target, float scale, float duration)
+    {
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(_rectTransform.DOMove(slot, 0.6f).SetEase(Ease.InBack));
-        sequence.Append(_rectTransform.DOScale(0.55f, 0.6f));
+        sequence.Append(_rectTransform.DOMove(target, duration).SetEase(Ease.InOutQuad));
+        sequence.Append(_rectTransform.DOScale(scale, duration));
         yield return sequence.WaitForCompletion();
     }
 }
