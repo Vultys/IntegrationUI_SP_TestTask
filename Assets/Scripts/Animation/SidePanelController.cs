@@ -12,11 +12,23 @@ public class SidePanelController : MonoBehaviour
     public bool IsVisible => _isVisible; 
     private bool _isVisible = true;
 
+    public void OnTogglePanelButtonClicked()
+    {
+        if(_isVisible)
+        {
+            StartCoroutine(HidePanel());
+        }
+        else
+        {
+            StartCoroutine(ShowPanel());
+        }
+    }
+
     public IEnumerator ShowPanel()
     {
         _isVisible = true;
-        yield return _panel.DOLocalMoveX(0, 0.5f).SetEase(Ease.OutCubic).WaitForCompletion();
-        yield return _hidePanelButton.DOLocalMoveX(263.5f, 0.5f).SetEase(Ease.OutCubic).WaitForCompletion();
+        yield return _hidePanelButton.DOLocalMoveX(696.5f, 0.5f).SetEase(Ease.InCubic).WaitForCompletion();
+        yield return _panel.DOLocalMoveX(847.5f, 0.5f).SetEase(Ease.OutCubic).WaitForCompletion();
     }
 
     public IEnumerator HidePanel()
