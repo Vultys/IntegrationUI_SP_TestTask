@@ -33,7 +33,7 @@ public class BoosterItemAnimations : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(_rectTransform.DOMove(center, 0.5f).SetEase(Ease.InOutQuad));
-        sequence.Append(_rectTransform.DOScale(1.25f, 0.5f));
+        sequence.Append(_rectTransform.DOScale(1.3f, 0.5f));
         yield return sequence.WaitForCompletion();
     }
 
@@ -42,7 +42,7 @@ public class BoosterItemAnimations : MonoBehaviour
         Deselect();
         Sequence sequence = DOTween.Sequence();
         sequence.Append(_rectTransform.DOMove(slot, 0.6f).SetEase(Ease.InBack));
-        sequence.Append(_rectTransform.DOScale(0.54f, 0.6f));
+        sequence.Append(_rectTransform.DOScale(0.55f, 0.6f));
         yield return sequence.WaitForCompletion();
     }
 }
