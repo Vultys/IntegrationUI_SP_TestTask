@@ -111,6 +111,7 @@ public class BoostersDialogController : MonoBehaviour
         if(!_sidePanelController.IsVisible)
         {
             yield return _sidePanelController.ShowPanel();
+            yield return new WaitForSeconds(_animationConfig.sidePanelAnimationDuration);
         }
         checkmark.SetActive(false);
 
